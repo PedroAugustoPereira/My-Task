@@ -1,0 +1,273 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+html, body{
+    height: 100%
+}
+
+header{
+    width: 100%;
+    background-color: rgb(0, 69, 78);
+}
+
+.container{
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.logo{
+    display: flex;
+    align-items: baseline;
+    justify-content: baseline;
+}
+
+.logo p{
+    font-size: 40px;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+.logo p span{
+    color: #ffd400
+}
+
+main{
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    margin-top: 20px;
+}¨
+ 
+.full-col{
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    width: 100%;
+}
+
+.full-col{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.col{
+    width: 40%;
+}
+
+
+.form-task{
+    box-shadow: 1px 2px 8px 0px #00000069;
+    border-radius: 10px
+}
+
+.form-task h2{
+    font-size: 25px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 20px;
+
+}
+
+.form-task form{
+    width: 100%;
+    margin-top: 20px;
+    padding-left: 20px;
+}
+
+
+.box-input{
+
+}
+
+.box-input p{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: rgb(0, 69, 78);
+}
+
+.box-input input[type="text"]{
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    max-width: 90%;
+    cursor: pointer;
+    border: 0.5px solid rgb(0, 69, 78);
+    border-radius: 6px;
+
+}
+
+.tabela{
+    box-shadow: 1px 2px 8px 0px #00000069;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabela h2{
+    font-size: 22px;
+    padding-top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.full-table{
+
+}
+
+
+.line-table{
+    display: flex;
+    border-top: 1px solid rgb(0, 69, 78);
+    border-bottom: 1px solid rgb(0, 69, 78);;
+}
+
+.check{
+    max-width: 70px;
+    background: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.check .input{
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: white;
+}
+
+.main-table{
+    display: flex;
+    justify-content: center;
+
+    flex-direction: column;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: calc(100% - 100px);
+
+    
+}
+
+.title{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.remove{
+    max-width: 40px;
+    background: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    cursor: pointer;
+    
+}
+
+.remove i{
+    font-size: 20px;
+    color: white
+}
+
+.btn {
+    width: 180px;
+    height: 60px;
+    cursor: pointer;
+    background-color: rgb(0, 69, 78);
+    border: 1px solid #91C9FF;
+    outline: none;
+    transition: 1s ease-in-out;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    fill: none;
+    stroke: #fff;
+    stroke-dasharray: 150 480;
+    stroke-dashoffset: 150;
+    transition: 1s ease-in-out;
+  }
+  
+  .btn:hover {
+    transition: 1s ease-in-out;
+    background: #4F95DA;
+    color: black;
+    border: 2px solid rgb(0, 69, 78);
+    background-color: white;
+  }
+  
+  .btn:hover svg {
+    stroke-dashoffset: -480;
+   
+  }
+  
+  .btn span {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .reload{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .btn2{
+    background-color: #003cbd;
+    color: white;
+    width: 100%;
+  }
+
+  .btn2:hover {
+    transition: 1s ease-in-out;
+    background: #2acea5;
+    border: 2px solid rgb(0, 69, 78);
+    color: black;
+  }
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 400px){
+    .full-col{
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+    }
+    
+    .col{
+        width: 95%;
+        margin: 0 auto !important;
+    }
+}

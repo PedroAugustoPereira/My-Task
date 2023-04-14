@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <!--FONTES-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+    <script src="https://kit.fontawesome.com/d87be17ae7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <p>My<span>Task</span></p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+            <div class="full-col">
+                <div class="col" style="position: relative">
+                    <div class="form-task">
+                        <h2>CRIE SUAS TASKS</h2>
+                        <form>
+                            <div class="box-input">
+                                <p>NOME: </p>
+                                <input id="nome" type="text">
+                            </div>
+
+                            <div class="box-input">
+                                <p>TÍTULO </p>
+                                <input id="titulo" type="text">
+                            </div>
+
+                            <button onclick="saveData()" class="btn">
+                                <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
+                                  <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+                                  <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+                                </svg>
+                                <span id="add">ADICIONAR TASK</span>
+                              </button>
+                        </form>
+                    </div>
+
+                    <div class="reload">
+                        <button onclick="loadData()" class="btn btn2">
+                            <svg width="180px" height="60px" viewBox="0 0 180 60" class="border">
+                              <polyline points="179,1 179,59 1,59 1,1 179,1" class="bg-line" />
+                              <polyline points="179,1 179,59 1,59 1,1 179,1" class="hl-line" />
+                            </svg>
+                            <span>CARREGAR DADOS</span>
+                        </button>
+                    </div>
+
+                    
+                  
+                </div>
+
+                <div class="col">
+                   <div class="tabela">
+                        <h2>LISTA DE TASKS</h2>
+
+                        <div class="full-table" id="tasks">
+                            <div class="line-table">
+                               
+                            </div>
+                        </div>
+                   </div>
+                </div>
+            </div>
+    </main>
+
+
+
+
+    <script>
+        var selectId = null;
+
+       
+
+
+
+        function verifyCookie(token){
+            if(document.cookie.indexOf("token") < 0){
+                const cookie = "token=" + token + ";"
+                const expiration = "expires=" + new Date(2022,9,24) + ";"
+                const path = "path=/;"
+
+                document.cookie = cookie + expiration + path;
+            }
+        }
+
+
+
+
+        function loadData (){
+            var myRequest = new Request("http://localhost:3030/tasks");
+            
+            fetch(myRequest).then(response => {
+                if(response.status === 200){
+                    return response.json();
+                }
+                else{
+                    throw new Error('Ops! Houve um erro em nosso servidor.');
+                }
+            }).then(response => {
+                pushData(response);
+            }).catch(err => {
+                console.log(err);
+            })
+
+        }
+
+        function pushData(response) {
+            let table = document.getElementById("tasks");
+            table.innerHTML = "";
+           
+            response.result.forEach((value, index) => {
+                const elementResponse = value;
+
+                const itens = document.createElement('div');
+                itens.classList.add("line-table");
+                itens.setAttribute("id", elementResponse.id);
+
+                
+
+                itens.innerHTML = 
+                `
+                <div id="${response.result[index].id}" class="check">
+                   <div class="input">
+                    
+                    </div>
+                </div>
+
+                 <div id="line-${response.result[index].id}" class="main-table">
+                    <p class="title">${elementResponse.titulo}</p>
+                    <p class="name">${elementResponse.nome}</p>
+                </div>
+
+                 <div id="remove-${response.result[index].id}" class="remove">
+                    <i class="fa-solid fa-trash"></i>
+                 </div>
+                `;
+
+
+                table.appendChild(itens);
+
+                let mainLine = document.getElementById("line-"+elementResponse.id)
+                mainLine.addEventListener("click", ()=>{
+                    select(elementResponse);
+                })
+
+                let deleteId = document.getElementById("remove-" + elementResponse.id);
+
+                deleteId.addEventListener("click", ()=>{
+                    console.log("clicou")
+                    remove(elementResponse.id);
+                })
+            });
+        }
+
+        function saveData(){
+            
+            const newPost = {
+                id: selectId,
+                nome: document.getElementById("nome").value,
+                feito: 0,
+                titulo:  document.getElementById("titulo").value,
+            }
+
+            console.log(newPost.titulo)
+
+            fetch('http://localhost:3030/insert', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newPost),
+            }).then((response) => {
+                response.text()
+            }).then(responseText => {
+                alert('Resposta back-end: ' + responseText);
+            })
+
+            restartForm()
+            loadData()
+        }
+
+
+        function restartForm(){
+            document.getElementById("nome").value = null
+            document.getElementById("titulo").value = null
+            selectId = null;
+        }
+
+        function select(element){
+            document.querySelector("#nome").value = element.nome;
+            document.querySelector("#titulo").value = element.titulo;
+            document.getElementById("add").innerHTML = "ATUALIZAR TASK";
+
+            selectId = element.id;
+        }
+
+        function remove(id){
+            
+            fetch('http://localhost:3030/tasks/' + id, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then((response) => {
+                response.text()
+            }).then(responseText => {
+                alert('Resposta back-end: TASK APAGADO');
+            })
+            loadData()
+        }
+
+
+       
+
+
+
+        window.onload = loadData()
+
+
+
+
+
+
+        //verificação login
+        function isLogin(token){
+            
+        }
+
+        function reqLogin(){
+
+        }
+
+
+
+    </script>
+
+
+</body>
+</html>
